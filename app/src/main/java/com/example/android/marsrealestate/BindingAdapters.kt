@@ -22,12 +22,25 @@ import android.net.Uri
 import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.example.android.marsrealestate.network.MarsProperty
+import com.example.android.marsrealestate.overview.PhotoGridAdapter
 
 @BindingAdapter("imgUrl")
 fun bindImage(imageView: ImageView, imgUrl: String?) {
     imgUrl?.let {
         val imgUri = it.toUri().buildUpon().scheme("https").build()
-        Glide.with(imageView.context).load(imgUri).into(imageView)
+        Glide.with(imageView.context).load(imgUri).apply(
+            RequestOptions().error(R.drawable.ic_broken_image)
+                .placeholder(R.drawable.loading_animation)
+        ).into(imageView)
     }
+}
+
+@BindingAdapter("listData")
+fun bindingRecyclerView(recyclerView: RecyclerView, data: List<MarsProperty>?) {
+    val adapter = recyclerView.adapter as PhotoGridAdapter
+    adapter.submitList(data)
 }

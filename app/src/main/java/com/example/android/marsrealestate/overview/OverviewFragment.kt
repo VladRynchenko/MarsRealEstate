@@ -45,14 +45,14 @@ class OverviewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = GridViewItemBinding.inflate(inflater)
+        val binding = FragmentOverviewBinding.inflate(inflater)
 
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
 
         // Giving the binding access to the OverviewViewModel
-        binding.view = viewModel
-
+        binding.viewModel = viewModel
+        binding.photosGrid.adapter = PhotoGridAdapter()
         setHasOptionsMenu(true)
         return binding.root
     }
